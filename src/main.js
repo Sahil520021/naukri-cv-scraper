@@ -110,9 +110,9 @@ try {
     Actor.log.info('🎉 Actor completed successfully');
 
 } catch (error) {
-    Actor.log.error('💥 Actor failed with error:', {
+    console.error('💥 Actor failed with error:', {
         message: error.message,
-        details: error.response?.data || error.stack
+        details: error.response?.data
     });
     
     await Actor.setValue('OUTPUT', {
