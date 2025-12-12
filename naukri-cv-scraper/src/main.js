@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // CONFIGURATION - Update your n8n webhook URL here
 const CONFIG = {
-    n8nWebhookUrl: 'https://n8n.srv936319.hstgr.cloud/webhook/naukri-scraper',
+    n8nWebhookUrl: 'https://n8n.srv936319.hstgr.cloud/webhook/naukri-scrapper',
     // Add optional authentication if you secure your webhook
     webhookSecret: process.env.N8N_WEBHOOK_SECRET || null
 };
