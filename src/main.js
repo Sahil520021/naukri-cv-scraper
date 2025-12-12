@@ -11,7 +11,7 @@ const CONFIG = {
 await Actor.init();
 
 try {
-    Actor.log.info('🚀 Naukri CV Scraper - Calling n8n workflow');
+    console.log('🚀 Naukri CV Scraper - Calling n8n workflow');
     
     // Get input from user
     const input = await Actor.getInput();
@@ -32,7 +32,7 @@ try {
         throw new Error('❌ Missing required fields: requirementId, companyId, rdxUserId, rdxUserName');
     }
 
-    Actor.log.info('✅ Input validated, calling n8n webhook...', { 
+    console.log('✅ Input validated, calling n8n webhook...', { 
         requirementId, 
         companyId, 
         rdxUserId,
@@ -63,14 +63,14 @@ try {
         }
     );
 
-    Actor.log.info('✅ n8n workflow completed successfully');
+    console.log('✅ n8n workflow completed successfully');
 
     // n8n returns the processed data
     const results = response.data;
 
     // If n8n returns an array of profiles, push each to dataset
     if (Array.isArray(results)) {
-        Actor.log.info(`📊 Processing ${results.length} results from n8n`);
+        console.log(`📊 Processing ${results.length} results from n8n`);
         
         for (const profile of results) {
             await Actor.pushData(profile);
@@ -84,7 +84,7 @@ try {
     } 
     // If n8n returns a single object
     else if (results && typeof results === 'object') {
-        Actor.log.info('📊 Processing results from n8n');
+        console.log('📊 Processing results from n8n');
         
         // If results has a profiles array
         if (results.profiles && Array.isArray(results.profiles)) {
@@ -100,14 +100,14 @@ try {
     } 
     // Unknown format
     else {
-        Actor.log.warning('⚠️ Unexpected response format from n8n');
+        console.warn('⚠️ Unexpected response format from n8n');
         await Actor.setValue('OUTPUT', {
             success: true,
             data: results
         });
     }
 
-    Actor.log.info('🎉 Actor completed successfully');
+    console.log('🎉 Actor completed successfully');
 
 } catch (error) {
     console.error('💥 Actor failed with error:', {
