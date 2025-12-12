@@ -1,53 +1,23 @@
 {
-    "title": "Naukri CV Scraper Input",
+    "title": "Naukri Resdex CV Scraper Input",
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "cookies": {
-            "title": "🍪 Cookie Header (REQUIRED)",
+        "curlCommand": {
+            "title": "🔗 cURL Command",
             "type": "string",
-            "description": "STEP 1: Login to resdex.naukri.com → F12 → Network tab → Click any request → Copy the entire 'cookie:' header value",
+            "description": "Paste the complete cURL command from Chrome DevTools.\n\n**How to get it:**\n1. Go to Resdex and search for candidates\n2. Open DevTools (F12) → Network tab\n3. Find the POST request to 'rdxLite/search'\n4. Right-click → Copy → Copy as cURL (bash)\n5. Paste it here",
             "editor": "textarea",
-            "example": "geo_country=IN;J=0;UNPC=125281556;UNCC=125666042;lastLoggedInUser=krrish@grrbaow.com;...",
-            "minLength": 100
-        },
-        "requirementId": {
-            "title": "📋 Requirement ID (REQUIRED)",
-            "type": "string",
-            "description": "STEP 2: From your Resdex URL: 'requirementId=130761' - just copy the number",
-            "editor": "textfield",
-            "example": "130761"
-        },
-        "companyId": {
-            "title": "🏢 Company ID (REQUIRED)",
-            "type": "string",
-            "description": "STEP 3: Found in cookies as 'UNPC=125281556' - copy the number after UNPC=",
-            "editor": "textfield",
-            "example": "125281556"
-        },
-        "rdxUserId": {
-            "title": "👤 Recruiter User ID (REQUIRED)",
-            "type": "string",
-            "description": "STEP 4: Found in cookies as 'UNCC=125666042' - copy the number after UNCC=",
-            "editor": "textfield",
-            "example": "125666042"
-        },
-        "rdxUserName": {
-            "title": "📧 Login Email (REQUIRED)",
-            "type": "string",
-            "description": "STEP 5: Found in cookies as 'lastLoggedInUser=your@email.com' - copy your email",
-            "editor": "textfield",
-            "example": "krrish@grrbaow.com"
+            "example": "curl 'https://resdex.naukri.com/cloudgateway-resdex/recruiter-js-profile-listing-services/v0/rdxLite/search' --data-raw '{\"requirementId\":\"130761\"...}'"
         },
         "maxResults": {
             "title": "🎯 Maximum Profiles to Fetch",
             "type": "integer",
-            "description": "How many candidate profiles to scrape (recommended: start with 5-10 for testing)",
+            "description": "How many candidate profiles do you want to scrape? (1-100)",
             "default": 10,
             "minimum": 1,
-            "maximum": 100,
-            "editor": "number"
+            "maximum": 100
         }
     },
-    "required": ["cookies", "requirementId", "companyId", "rdxUserId", "rdxUserName"]
+    "required": ["curlCommand"]
 }
