@@ -4,7 +4,6 @@ import axios from 'axios';
 // CONFIGURATION - Update your n8n webhook URL here
 const CONFIG = {
     n8nWebhookUrl: 'https://n8n.srv936319.hstgr.cloud/webhook/naukri-scrapper',
-    // Add optional authentication if you secure your webhook
     webhookSecret: process.env.N8N_WEBHOOK_SECRET || null
 };
 
@@ -15,50 +14,30 @@ try {
     
     // Get input from user
     const input = await Actor.getInput();
-    const {
-        cookies,
-        requirementId,
-        companyId,
-        rdxUserId,
-        rdxUserName,
-        maxResults = 10
-    } = input;
+    const { curlCommand, maxResults = 10 } = input;
 
     // Validate required inputs
-    if (!cookies) {
-        throw new Error('❌ Cookies are required. Please provide your Resdex session cookies.');
-    }
-    if (!requirementId || !companyId || !rdxUserId || !rdxUserName) {
-        throw new Error('❌ Missing required fields: requirementId, companyId, rdxUserId, rdxUserName');
+    if (!curlCommand) {
+        throw new Error('❌ cURL command is required. Please provide the complete cURL command from Chrome DevTools.');
     }
 
-    console.log('✅ Input validated, calling n8n webhook...', { 
-        requirementId, 
-        companyId, 
-        rdxUserId,
-        maxResults 
-    });
+    console.log('✅ Input validated, calling n8n webhook...');
 
-    // Call your n8n webhook with the inputs
+    // Call your n8n webhook with the cURL command
+    // n8n will parse it and extract everything needed
     const response = await axios.post(
         CONFIG.n8nWebhookUrl,
         {
-            cookies,
-            requirementId,
-            companyId,
-            rdxUserId,
-            rdxUserName,
+            curlCommand,
             maxResults
         },
         {
             headers: {
                 'Content-Type': 'application/json',
-                // Optional: Add authentication header if you secure your webhook
                 ...(CONFIG.webhookSecret && {
                     'Authorization': `Bearer ${CONFIG.webhookSecret}`
                 })
             },
-            // Set a longer timeout since n8n might take time to process
             timeout: 300000 // 5 minutes
         }
     );
