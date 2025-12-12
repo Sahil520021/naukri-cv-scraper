@@ -1,1 +1,73 @@
-
+{
+    "actorSpecification": 1,
+    "name": "naukri-cv-scraper",
+    "title": "Naukri Resdex CV Scraper",
+    "description": "Extract candidate CVs and profiles from Naukri Resdex. Get structured candidate data including full CV text, contact info, skills, and experience. Perfect for recruitment agencies and HR teams.",
+    "version": "1.0.0",
+    "meta": {
+        "templateId": "javascript-node"
+    },
+    "input": "./INPUT_SCHEMA.json",
+    "dockerfile": "./Dockerfile",
+    "readme": "./README.md",
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "title": "Candidate Profiles",
+            "views": {
+                "overview": {
+                    "title": "Overview",
+                    "transformation": {
+                        "fields": [
+                            "name",
+                            "email",
+                            "mobile",
+                            "currentDesignation",
+                            "currentCompany",
+                            "totalExperience",
+                            "location",
+                            "skills"
+                        ]
+                    },
+                    "display": {
+                        "component": "table",
+                        "properties": {
+                            "name": {
+                                "label": "Name",
+                                "format": "text"
+                            },
+                            "email": {
+                                "label": "Email",
+                                "format": "text"
+                            },
+                            "mobile": {
+                                "label": "Mobile",
+                                "format": "text"
+                            },
+                            "currentDesignation": {
+                                "label": "Designation",
+                                "format": "text"
+                            },
+                            "currentCompany": {
+                                "label": "Company",
+                                "format": "text"
+                            },
+                            "totalExperience": {
+                                "label": "Experience",
+                                "format": "text"
+                            },
+                            "location": {
+                                "label": "Location",
+                                "format": "text"
+                            },
+                            "skills": {
+                                "label": "Skills",
+                                "format": "text"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
