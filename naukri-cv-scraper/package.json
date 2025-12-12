@@ -1,0 +1,30 @@
+{
+    "name": "naukri-cv-scraper",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Extract candidate CVs from Naukri Resdex with full profile data",
+    "main": "src/main.js",
+    "scripts": {
+        "start": "node src/main.js",
+        "test": "echo \"No tests specified\" && exit 0"
+    },
+    "keywords": [
+        "naukri",
+        "resdex",
+        "recruitment",
+        "cv-scraper",
+        "hr",
+        "apify",
+        "india-jobs"
+    ],
+    "author": "GRR BAOW LLC",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "apify": "^3.0.0",
+        "axios": "^1.6.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/YOUR_USERNAME/naukri-cv-scraper"
+    }
+}
