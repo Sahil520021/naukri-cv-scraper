@@ -24,7 +24,6 @@ try {
     console.log('✅ Input validated, calling n8n webhook...');
 
     // Call your n8n webhook with the cURL command
-    // n8n will parse it and extract everything needed
     const response = await axios.post(
         CONFIG.n8nWebhookUrl,
         {
@@ -47,34 +46,41 @@ try {
     // n8n returns the processed data
     const results = response.data;
 
-    // If n8n returns an array of profiles, push each to dataset
-    if (Array.isArray(results)) {
+    // Check if we have candidates array (this is what n8n returns)
+    if (results.candidates && Array.isArray(results.candidates)) {
+        console.log(`📊 Processing ${results.candidates.length} candidates from n8n`);
+        
+        for (const candidate of results.candidates) {
+            await Actor.pushData(candidate);
+        }
+        
+        await Actor.setValue('OUTPUT', {
+            success: true,
+            totalCandidates: results.totalCandidates,
+            scrapedAt: results.scrapedAt,
+            candidates: results.candidates
+        });
+        
+        console.log(`🎉 Successfully scraped ${results.totalCandidates} candidates`);
+    } 
+    // If results is an array directly
+    else if (Array.isArray(results)) {
         console.log(`📊 Processing ${results.length} results from n8n`);
         
         for (const profile of results) {
             await Actor.pushData(profile);
         }
-
+        
         await Actor.setValue('OUTPUT', {
             success: true,
             totalProfiles: results.length,
             profiles: results
         });
     } 
-    // If n8n returns a single object
+    // If results is a single object
     else if (results && typeof results === 'object') {
-        console.log('📊 Processing results from n8n');
-        
-        // If results has a profiles array
-        if (results.profiles && Array.isArray(results.profiles)) {
-            for (const profile of results.profiles) {
-                await Actor.pushData(profile);
-            }
-        } else {
-            // Otherwise push the entire result
-            await Actor.pushData(results);
-        }
-
+        console.log('📊 Processing single result from n8n');
+        await Actor.pushData(results);
         await Actor.setValue('OUTPUT', results);
     } 
     // Unknown format
