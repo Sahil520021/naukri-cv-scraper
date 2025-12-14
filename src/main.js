@@ -14,15 +14,15 @@ try {
     
     // Get input from user
     const input = await Actor.getInput();
-    const { curlCommand, maxResults = 10 } = input;
-
+    const { curlCommand, maxResults = 1000 } = input; // CHANGED: 10 → 1000
+    
     // Validate required inputs
     if (!curlCommand) {
         throw new Error('❌ cURL command is required. Please provide the complete cURL command from Chrome DevTools.');
     }
-
-    console.log('✅ Input validated, calling n8n webhook...');
-
+    
+    console.log(`✅ Input validated, requesting ${maxResults} results from n8n webhook...`);
+    
     // Call your n8n webhook with the cURL command
     const response = await axios.post(
         CONFIG.n8nWebhookUrl,
@@ -37,15 +37,15 @@ try {
                     'Authorization': `Bearer ${CONFIG.webhookSecret}`
                 })
             },
-            timeout: 300000 // 5 minutes
+            timeout: 600000 // CHANGED: 5min → 10min (for 1000 results)
         }
     );
-
+    
     console.log('✅ n8n workflow completed successfully');
-
+    
     // n8n returns the processed data
     const results = response.data;
-
+    
     // Check if we have candidates array (this is what n8n returns)
     if (results.candidates && Array.isArray(results.candidates)) {
         console.log(`📊 Processing ${results.candidates.length} candidates from n8n`);
@@ -91,9 +91,9 @@ try {
             data: results
         });
     }
-
+    
     console.log('🎉 Actor completed successfully');
-
+    
 } catch (error) {
     console.error('💥 Actor failed with error:', {
         message: error.message,
