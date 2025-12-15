@@ -13,10 +13,9 @@
         "maxResults": {
             "title": "🎯 Maximum Profiles to Fetch",
             "type": "integer",
-            "description": "How many candidate profiles do you want to scrape? (1-1000)",
+            "description": "How many candidate profiles do you want to scrape?",
             "default": 10,
-            "minimum": 1,
-            "maximum": 1000
+            "minimum": 1
         }
     },
     "required": ["curlCommand"]
