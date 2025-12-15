@@ -46,7 +46,7 @@ try {
                     'Authorization': `Bearer ${CONFIG.webhookSecret}`
                 })
             },
-            timeout: 600000 // 10min (for 1000 results)
+            timeout: 6000000 // 10min (for 1000 results)
         }
     );
     
