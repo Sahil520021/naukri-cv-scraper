@@ -28,6 +28,7 @@ Click Fetch/XHR filter & Click Preserve Log
 <img width="1657"  alt="Screenshot 2025-12-15 at 11 32 36 AM" src="https://github.com/user-attachments/assets/4247d309-fc47-4750-83ee-2204c9561393" />
 
 Find the 'search' request
+
 <img width="800" alt="Screenshot 2025-12-15 at 11 33 21 AM" src="https://github.com/user-attachments/assets/0fa0f7ee-d5cc-401f-98ac-118d79cbd964" />
 
 if you can't find the 'search' request
