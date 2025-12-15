@@ -17,7 +17,7 @@ try {
     
     // Get input from user
     const input = await Actor.getInput();
-    const { curlCommand, maxResults = 1000 } = input;
+    const { curlCommand, maxResults = 10 } = input;
     
     // Validate required inputs
     if (!curlCommand) {
